@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="ARC Voyages : application de réservation de voyages en car entre les villes du Bénin, en préparation.">
+<title>ARC Voyages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;600&display=swap">
+<style>
+/* Une colonne : en-tête, accroche + tableau des départs (exemple), étapes, fonctions, pied de page */
+:root {
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --fg: #14213a;
+  --muted: #586379;
+  --line: #d6dce6;
+  --accent: #1d4ed8;
+  --board: #10192c;
+  --board-fg: #f2c94c;
+  --board-dim: #8b97ad;
+  --display: "Barlow Condensed", "Arial Narrow", "Segoe UI", sans-serif;
+  --body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1424; --surface: #141d31; --fg: #e8edf6; --muted: #9aa6bd; --line: #26324b;
+    --accent: #7aa2ff; --board: #070c17; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1424; --surface: #141d31; --fg: #e8edf6; --muted: #9aa6bd; --line: #26324b;
+  --accent: #7aa2ff; --board: #070c17; color-scheme: dark;
+}
+html { color-scheme: light; } [hidden] { display: none !important; } img { max-width: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 1.0625rem/1.6 var(--body); }
+.wrap {
+  max-width: 1000px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 48px;
+  display: grid; gap: 56px;
+}
+header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.brand { font: 700 1.9rem/1 var(--display); letter-spacing: .02em; text-transform: uppercase; }
+.brand span { color: var(--accent); }
+.status {
+  font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px;
+}
+.hero { display: grid; grid-template-columns: 1fr 1.05fr; gap: 40px; align-items: center; }
+.hero > * { min-width: 0; }
+h1 { font: 700 clamp(2.3rem, 6vw, 3.6rem)/1 var(--display); text-transform: uppercase; letter-spacing: .01em; margin: 0 0 18px; text-wrap: balance; }
+.lead { color: var(--muted); margin: 0; max-width: 58ch; }
+
+.board { background: var(--board); color: var(--board-fg); border-radius: 8px; padding: 18px 18px 14px; overflow-x: auto; }
+.board-top { display: flex; justify-content: space-between; gap: 12px; font: 700 1.1rem/1 var(--display); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 12px; }
+.board-top small { color: var(--board-dim); font: 400 .75rem/1 var(--mono); letter-spacing: .04em; align-self: center; }
+.board table { width: 100%; border-collapse: collapse; font: 400 .9rem/1.2 var(--mono); font-variant-numeric: tabular-nums; min-width: 340px; }
+.board th { color: var(--board-dim); font-weight: 400; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; text-align: left; padding: 0 8px 8px 0; }
+.board td { padding: 9px 8px 9px 0; border-top: 1px solid rgba(139,151,173,.22); white-space: nowrap; }
+.board td:last-child, .board th:last-child { text-align: right; padding-right: 0; }
+.board .note { color: var(--board-dim); font: 400 .72rem/1.4 var(--mono); margin-top: 10px; }
+
+h2 { font: 700 1.7rem/1.1 var(--display); text-transform: uppercase; letter-spacing: .02em; margin: 0 0 22px; }
+.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; counter-reset: s; }
+.steps li { min-width: 0; counter-increment: s; border-top: 2px solid var(--fg); padding-top: 12px; }
+.steps li::before { content: "Étape " counter(s); display: block; font: 600 .75rem/1 var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin-bottom: 8px; }
+.steps h3, .features h3 { font: 600 1.05rem/1.3 var(--body); margin: 0 0 6px; }
+.steps p, .features p { margin: 0; color: var(--muted); font-size: .98rem; }
+.features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px 40px; }
+.features div { min-width: 0; }
+
+footer { border-top: 1px solid var(--line); padding-top: 20px; color: var(--muted); font-size: .9rem; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+@media (max-width: 760px) {
+  .hero, .steps, .features { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="brand">ARC <span>Voyages</span></div>
+    <div class="status">Application en préparation · Bénin</div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Réservez votre place de car depuis votre téléphone.</h1>
+      <p class="lead">ARC Voyages est une application de réservation de voyages en car entre les villes du Bénin.
+        Vous choisissez votre trajet et votre heure de départ, vous payez par Mobile Money et vous recevez
+        votre billet et vos rappels sur WhatsApp.</p>
+    </div>
+    <div class="board" aria-label="Exemple de tableau des départs">
+      <div class="board-top">Départs <small>Cotonou · exemple</small></div>
+      <table>
+        <thead><tr><th>Heure</th><th>Destination</th><th>Places</th></tr></thead>
+        <tbody>
+          <tr><td>06:30</td><td>Parakou</td><td>12</td></tr>
+          <tr><td>07:00</td><td>Porto-Novo</td><td>8</td></tr>
+          <tr><td>08:15</td><td>Abomey</td><td>21</td></tr>
+          <tr><td>09:00</td><td>Natitingou</td><td>5</td></tr>
+          <tr><td>14:00</td><td>Lokossa</td><td>17</td></tr>
+        </tbody>
+      </table>
+      <div class="note">Horaires d'illustration, pas un service en cours.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Comment ça marche</h2>
+    <ol class="steps">
+      <li><h3>Choisir le trajet</h3><p>Ville de départ, destination, date et heure.</p></li>
+      <li><h3>Payer</h3><p>Paiement par Mobile Money depuis l'application.</p></li>
+      <li><h3>Recevoir le billet</h3><p>Billet et code de confirmation envoyés sur WhatsApp, à présenter à l'embarquement.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Ce que prévoit l'application</h2>
+    <div class="features">
+      <div><h3>Connexion par code WhatsApp</h3><p>Pas de mot de passe : un code à usage unique est envoyé sur votre numéro WhatsApp.</p></div>
+      <div><h3>Rappels de départ</h3><p>Un message avant le départ pour rappeler l'heure et le lieu d'embarquement.</p></div>
+      <div><h3>Places disponibles</h3><p>Le nombre de places restantes s'affiche pour chaque départ.</p></div>
+      <div><h3>Historique des voyages</h3><p>Vos billets passés et à venir, au même endroit.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 ARC Voyages</span>
+    <span>Bénin · Application en cours de développement</span>
+  </footer>
+</div>
+</body>
+</html>
